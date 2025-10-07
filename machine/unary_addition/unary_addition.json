@@ -1,0 +1,44 @@
+{
+	"name": "unary_addition",
+	"alphabet": ["1", "+", "=", "."],
+	"blank": ".",
+	"states": [	"init",
+			"scan_left_side",
+			"ensure_right_side",
+			"scan_right_side",
+			"del_last_carac",
+			"ERROR",
+			"END"
+		],
+	"initial": "init",
+	"finals": ["END", "ERROR"],
+	"transitions" : {
+		"init": [
+			{ "read": "1", "to_state": "scan_left_side", "write": "1", "action": "RIGHT"},
+			{ "read": "+", "to_state": "ERROR", "write": ".", "action": "RIGHT"},
+			{ "read": "=", "to_state": "ERROR", "write": ".", "action": "RIGHT"}
+		],
+		"scan_left_side": [
+			{ "read": "1", "to_state": "scan_left_side", "write": "1", "action": "RIGHT"},
+			{ "read": "+", "to_state": "ensure_right_side", "write": "1", "action": "RIGHT"},
+			{ "read": "=", "to_state": "ERROR", "write": ".", "action": "RIGHT"}
+		],
+		"ensure_right_side": [
+			{ "read": "1", "to_state": "scan_right_side", "write": "1", "action": "RIGHT"},
+			{ "read": "+", "to_state": "ERROR", "write": ".", "action": "RIGHT"},
+			{ "read": "=", "to_state": "ERROR", "write": ".", "action": "RIGHT"}
+		],
+		"scan_right_side": [
+			{ "read": "1", "to_state": "scan_right_side", "write": "1", "action": "RIGHT"},
+			{ "read": "+", "to_state": "ERROR", "write": ".", "action": "RIGHT"},
+			{ "read": "=", "to_state": "del_last_carac", "write": ".", "action": "LEFT"}
+		],
+		"del_last_carac": [
+			{ "read": "1", "to_state": "END", "write": ".", "action": "RIGHT"}
+		],
+		"ERROR": [
+			{ "read": "1", "to_state": "END", "write": ".", "action": "RIGHT"}
+		],
+	}
+}
+
