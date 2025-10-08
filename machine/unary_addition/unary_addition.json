@@ -1,44 +1,26 @@
 {
-	"name": "unary_addition",
-	"alphabet": ["1", "+", "=", "."],
+	"name": "unary_format_addition",
+	"alphabet": ["1", "+", "."],
 	"blank": ".",
-	"states": [	"init",
-			"scan_left_side",
-			"ensure_right_side",
-			"scan_right_side",
-			"del_last_carac",
-			"ERROR",
-			"END"
+	"states": [	"scan_left_operand",
+			"scan_right_operand",
+			"sub_one_to_right_operand",
+			"HALT"
 		],
-	"initial": "init",
-	"finals": ["END", "ERROR"],
-	"transitions" : {
-		"init": [
-			{ "read": "1", "to_state": "scan_left_side", "write": "1", "action": "RIGHT"},
-			{ "read": "+", "to_state": "ERROR", "write": ".", "action": "RIGHT"},
-			{ "read": "=", "to_state": "ERROR", "write": ".", "action": "RIGHT"}
+	"initial": "scan_left_operand",
+	"finals": ["HALT"],
+	"transitions" : { 
+		"scan_left_operand": [
+			{ "read": "1", "to_state": "scan_left_operand", "write": "1", "action": "RIGHT"},
+			{ "read": "+", "to_state": "scan_right_operand", "write": "1", "action": "RIGHT"},
 		],
-		"scan_left_side": [
-			{ "read": "1", "to_state": "scan_left_side", "write": "1", "action": "RIGHT"},
-			{ "read": "+", "to_state": "ensure_right_side", "write": "1", "action": "RIGHT"},
-			{ "read": "=", "to_state": "ERROR", "write": ".", "action": "RIGHT"}
+		"scan_right_operand": [
+			{ "read": "1", "to_state": "scan_right_operand", "write": "1", "action": "RIGHT"},
+			{ "read": ".", "to_state": "sub_one_to_right_operand", "write": ".", "action": "LEFT"}
 		],
-		"ensure_right_side": [
-			{ "read": "1", "to_state": "scan_right_side", "write": "1", "action": "RIGHT"},
-			{ "read": "+", "to_state": "ERROR", "write": ".", "action": "RIGHT"},
-			{ "read": "=", "to_state": "ERROR", "write": ".", "action": "RIGHT"}
-		],
-		"scan_right_side": [
-			{ "read": "1", "to_state": "scan_right_side", "write": "1", "action": "RIGHT"},
-			{ "read": "+", "to_state": "ERROR", "write": ".", "action": "RIGHT"},
-			{ "read": "=", "to_state": "del_last_carac", "write": ".", "action": "LEFT"}
-		],
-		"del_last_carac": [
+		"sub_one_to_right_operand": [
 			{ "read": "1", "to_state": "END", "write": ".", "action": "RIGHT"}
-		],
-		"ERROR": [
-			{ "read": "1", "to_state": "END", "write": ".", "action": "RIGHT"}
-		],
+		]
 	}
 }
 
