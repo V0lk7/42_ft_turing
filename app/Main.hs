@@ -20,5 +20,5 @@ main = do
 
 run :: String -> String -> IO()
 run m t = do
-    Json_Parser.test m t
+    Json_Parser.test m t -- TODO : Replace with parsing
     -- TODO : storage -> tape parsing -> launch machine
