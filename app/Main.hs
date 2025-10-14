@@ -1,8 +1,8 @@
 module Main where
-import Json_Parser
 import System.Environment (getArgs)
 import Data.Char (toLower)
 import System.Exit (die, exitSuccess)
+import qualified Json_Parser as JP
 
 main :: IO ()
 main = do
@@ -18,7 +18,10 @@ main = do
                             _               ->  die $ "Wrong number of args. " ++ usage
 
 
-run :: String -> String -> IO()
-run m t = do
-    Json_Parser.test m t -- TODO : Replace with parsing
-    -- TODO : storage -> tape parsing -> launch machine
+run :: FilePath -> String -> IO()
+run machinePath tape = do
+    machine <- JP.parseMachineFile machinePath
+--    putStrLn "Machine :"
+--    print machine
+
+    -- TODO : tape parsing -> launch machine

@@ -76,7 +76,8 @@ executable ftTuring
                     aeson,
                     bytestring,
                     text,
-                    containers
+                    containers,
+                    unordered-containers
 
     -- Directories containing source files.
     hs-source-dirs:   app
