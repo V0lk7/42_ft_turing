@@ -19,8 +19,9 @@ main = do
 
 
 run :: FilePath -> String -> IO()
-run machinePath tape = do
-    machine <- JP.parseMachineFile machinePath
+run machinePath _tape = do
+    _machine <- JP.parseMachineFile machinePath
+    return ()
 --    putStrLn "Machine :"
 --    print machine
 

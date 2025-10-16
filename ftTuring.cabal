@@ -84,3 +84,22 @@ executable ftTuring
 
     -- Base language which the package is written in.
     default-language: GHC2021
+
+-- Section de tests
+test-suite ftTuring-test
+    import:           warnings
+    type:             exitcode-stdio-1.0
+    main-is:          Test.hs
+    other-modules:    Json_Parser,
+                      JsonParserTest
+    build-depends:    base ^>=4.18.3.0,
+                      aeson,
+                      bytestring,
+                      text,
+                      containers,
+                      unordered-containers,
+                      tasty,
+                      tasty-hunit,
+                      filepath
+    hs-source-dirs:   test, app
+    default-language: GHC2021
