@@ -53,7 +53,8 @@ parseActionText :: Text -> Parser Action
 parseActionText t = case T.toUpper (T.strip t) of
                         "RIGHT" ->  return RIGHT
                         "LEFT"  ->  return LEFT
-                        other   ->  fail $ "Invalid action: action can only be \"RIGHT\" or \"LEFT\", found: " ++ T.unpack other
+                        other   ->  fail $ "Invalid action: action can only be \"RIGHT\" or \"LEFT\", found: "
+                                                                ++ T.unpack other
 
 -- Intermediate Transition struct to read each JSON transitions
 -- { "read": "...", "to_state": "...", "write": "...", "action": "..."}
@@ -98,6 +99,18 @@ instance FromJSON Machine where
         transRawMap <- parseTransitionsObject transVal
 
         -- validation
+        -- non empty transitions
+        if M.null transRawMap
+            then fail "Invalid machine: 'transitions' cannot be empty."
+            else return ()
+
+        -- no transition should be empty
+        let emptyTransitionStates = [ k | (k, lst) <- M.toList transRawMap, null lst ]
+        if null emptyTransitionStates
+            then return ()
+            else fail $ "Invalid machine: the following state(s) have an empty transition list: "
+                                    ++ show (map T.unpack emptyTransitionStates)
+
         -- non empty states
         if null (states :: [Text])
             then fail "Invalid machine: 'states' must contain at least one state."
@@ -129,6 +142,21 @@ instance FromJSON Machine where
             then return ()
             else fail $ "Invalid machine: 'transitions' contains undeclared states: " ++ show (map T.unpack unknownKeys)
 
+        -- final states must not have transitions
+        let finalsWithTransitions = filter (`elem` transKeys) finals
+        if null finalsWithTransitions
+            then return ()
+            else fail $ "Invalid machine: final state(s) must not have transitions defined: "
+                                    ++ show (map T.unpack finalsWithTransitions)
+
+        -- every non final state must have a transition
+        let nonFinalStates = filter (`notElem` finals) states
+            missingTransitionStates = filter (`notElem` transKeys) nonFinalStates
+        if null missingTransitionStates
+            then return ()
+            else fail $ "Invalid machine: missing transition(s) for non-final states: "
+                                     ++ show (map T.unpack missingTransitionStates)
+
         -- transform TransitionRaw to Transition while validating transition components
         let validateAndConvert :: (Text, TransitionRaw) -> Parser Transition
             validateAndConvert (srcState, trRaw) = do
@@ -136,16 +164,19 @@ instance FromJSON Machine where
                 let toSt = rawTo trRaw
                 if toSt `elem` states
                     then return ()
-                    else fail $ "Invalid machine: transition from '" ++ T.unpack srcState ++ "' in to_state is not declared: " ++ T.unpack toSt
+                    else fail $ "Invalid machine: transition from '" ++ T.unpack srcState
+                                    ++ "' in to_state is not declared: " ++ T.unpack toSt
                 -- check read and write in alphabet
                 let r = rawRead trRaw
                     w = rawWrite trRaw
                 if r `elem` alphabet
                     then return ()
-                    else fail $ "Invalid machine: read symbol: " ++ T.unpack r ++ "' in transition '" ++ T.unpack srcState ++ "' not present in 'alphabet'."
+                    else fail $ "Invalid machine: read symbol: " ++ T.unpack r ++ "' in transition '"
+                                    ++ T.unpack srcState ++ "' not present in 'alphabet'."
                 if w `elem` alphabet
                     then return ()
-                    else fail $ "Invalid machine: write symbol: " ++ T.unpack w ++ "' in transition '" ++ T.unpack srcState ++ "' not present in 'alphabet'."
+                    else fail $ "Invalid machine: write symbol: " ++ T.unpack w ++ "' in transition '"
+                                    ++ T.unpack srcState ++ "' not present in 'alphabet'."
                 -- parse action
                 a <- parseActionText (rawAct trRaw)
                 -- successful conversion
