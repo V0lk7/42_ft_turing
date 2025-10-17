@@ -50,7 +50,7 @@ printTransitions m = do
 printBanner :: T.Text -> IO ()
 printBanner name = do
     let n = T.length name
-        line = replicate (fromIntegral n + 4) '*'
+        line = replicate (n + 4) '*'
         middle = "* " ++ T.unpack name ++ " *"
     putStrLn ""
     putStrLn line
