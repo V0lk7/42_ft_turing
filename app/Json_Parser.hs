@@ -44,6 +44,7 @@ data Machine = Machine
     , mBlank        :: Text
     , mStates       :: [Text]
     , mInitial      :: Text
+    , mCurrent      :: Text
     , mFinals       :: [Text]
     , mTransitions  :: M.Map Text [Transition]
     } deriving (Show, Eq, Generic)
@@ -190,7 +191,7 @@ instance FromJSON Machine where
         let transitionsMap = M.fromList convertedPairs
 
         -- everything fine: build machine
-        return $ Machine name alphabet blank states initial finals transitionsMap
+        return $ Machine name alphabet blank states initial initial finals transitionsMap
 
 -- open file, parse and die if an error occurs
 parseMachineFile :: FilePath -> IO Machine
