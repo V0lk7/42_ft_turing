@@ -20,6 +20,9 @@
 		],
 		"sub_one_to_right_operand": [
 			{ "read": "1", "to_state": "HALT", "write": ".", "action": "RIGHT"}
+		],
+		"HALT": [
+			{ "read": "1", "to_state": "HALT", "write": ".", "action": "RIGHT"}
 		]
 	}
 }

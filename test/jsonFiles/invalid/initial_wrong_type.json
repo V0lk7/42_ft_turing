@@ -7,7 +7,7 @@
 			"sub_one_to_right_operand",
 			"HALT"
 		],
-	"initial": "scan_left_operand",
+	"initial": 2,
 	"finals": ["HALT"],
 	"transitions" : { 
 		"scan_left_operand": [

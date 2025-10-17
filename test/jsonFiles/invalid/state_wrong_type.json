@@ -2,11 +2,7 @@
 	"name": "unary_format_addition",
 	"alphabet": ["1", "+", "."],
 	"blank": ".",
-	"states": [	"scan_left_operand",
-			"scan_right_operand",
-			"sub_one_to_right_operand",
-			"HALT"
-		],
+	"states": "wtf",
 	"initial": "scan_left_operand",
 	"finals": ["HALT"],
 	"transitions" : { 

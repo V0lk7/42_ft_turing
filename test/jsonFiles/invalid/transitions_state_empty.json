@@ -11,8 +11,6 @@
 	"finals": ["HALT"],
 	"transitions" : { 
 		"scan_left_operand": [
-			{ "read": "1", "to_state": "scan_left_operand", "write": "1", "action": "RIGHT"},
-			{ "read": "+", "to_state": "scan_right_operand", "write": "1", "action": "RIGHT"}
 		],
 		"scan_right_operand": [
 			{ "read": "1", "to_state": "scan_right_operand", "write": "1", "action": "RIGHT"},

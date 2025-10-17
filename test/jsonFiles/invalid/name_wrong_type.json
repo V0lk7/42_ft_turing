@@ -1,5 +1,5 @@
 {
-	"name": "unary_format_addition",
+	"name": 222, 
 	"alphabet": ["1", "+", "."],
 	"blank": ".",
 	"states": [	"scan_left_operand",

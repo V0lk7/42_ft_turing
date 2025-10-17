@@ -8,7 +8,6 @@
 			"HALT"
 		],
 	"initial": "scan_left_operand",
-	"finals": ["HALT"],
 	"transitions" : { 
 		"scan_left_operand": [
 			{ "read": "1", "to_state": "scan_left_operand", "write": "1", "action": "RIGHT"},

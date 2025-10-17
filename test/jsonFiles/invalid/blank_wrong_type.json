@@ -1,7 +1,7 @@
 {
 	"name": "unary_format_addition",
 	"alphabet": ["1", "+", "."],
-	"blank": ".",
+	"blank": 222,
 	"states": [	"scan_left_operand",
 			"scan_right_operand",
 			"sub_one_to_right_operand",
