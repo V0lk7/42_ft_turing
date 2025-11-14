@@ -1,0 +1,55 @@
+{
+	"name": "palindrome",
+	"alphabet": ["A", "B", "Y", "N", "."],
+	"blank": ".",
+	"states": [	"q0",
+			"q1",
+			"q2",
+            "q3",
+            "q4",
+            "q5",
+            "q6",
+            "q7",
+			"HALT"
+		],
+	"initial": "q0",
+	"finals": ["HALT"],
+    "transitions" : {
+		"q0": [
+			{ "read": "A", "to_state": "q1", "write": ".", "action": "RIGHT"},
+			{ "read": "B", "to_state": "q3", "write": ".", "action": "RIGHT"},
+			{ "read": ".", "to_state": "q7", "write": ".", "action": "RIGHT"}
+		],
+		"q1": [
+			{ "read": "A", "to_state": "q1", "write": "A", "action": "RIGHT"},
+			{ "read": "B", "to_state": "q1", "write": "B", "action": "RIGHT"},
+			{ "read": ".", "to_state": "q2", "write": ".", "action": "LEFT"}
+		],
+		"q2": [
+			{ "read": "A", "to_state": "q5", "write": "A", "action": "LEFT"},
+			{ "read": "B", "to_state": "q6", "write": "B", "action": "RIGHT"},
+			{ "read": ".", "to_state": "q7", "write": "B", "action": "RIGHT"}
+		],
+		"q3": [
+			{ "read": "A", "to_state": "q3", "write": "A", "action": "RIGHT"},
+			{ "read": "B", "to_state": "q3", "write": "B", "action": "RIGHT"},
+			{ "read": ".", "to_state": "q2", "write": ".", "action": "LEFT"}
+		],
+		"q4": [
+			{ "read": "B", "to_state": "q5", "write": ".", "action": "LEFT"},
+			{ "read": "A", "to_state": "q6", "write": "A", "action": "RIGHT"},
+			{ "read": ".", "to_state": "q7", "write": ".", "action": "RIGHT"}
+		],
+		"q5": [
+			{ "read": "A", "to_state": "q5", "write": "A", "action": "L"},
+            { "read": "B", "to_state": "q5", "write": "B", "action": "L"},
+            { "read": ".", "to_state": "q0", "write": ".", "action": "R"}
+		],
+		"q6": [
+			{ "read": ".", "to_state": "HALT", "write": "N", "action": "LEFT"}
+		],
+		"q7": [
+			{ "read": ".", "to_state": "HALT", "write": "Y", "action": "LEFT"}
+		]
+	}
+}
