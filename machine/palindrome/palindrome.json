@@ -26,9 +26,9 @@
 			{ "read": ".", "to_state": "q2", "write": ".", "action": "LEFT"}
 		],
 		"q2": [
-			{ "read": "A", "to_state": "q5", "write": "A", "action": "LEFT"},
+			{ "read": "A", "to_state": "q5", "write": ".", "action": "LEFT"},
 			{ "read": "B", "to_state": "q6", "write": "B", "action": "RIGHT"},
-			{ "read": ".", "to_state": "q7", "write": "B", "action": "RIGHT"}
+			{ "read": ".", "to_state": "q7", "write": ".", "action": "RIGHT"}
 		],
 		"q3": [
 			{ "read": "A", "to_state": "q3", "write": "A", "action": "RIGHT"},
