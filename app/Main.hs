@@ -3,6 +3,7 @@ import System.Environment (getArgs)
 import Data.Char (toLower)
 import System.Exit (die, exitSuccess)
 import qualified Json_Parser as JP
+import TuringMachine (executeMachine)
 
 main :: IO ()
 main = do
@@ -19,10 +20,9 @@ main = do
 
 
 run :: FilePath -> String -> IO()
-run machinePath _tape = do
-    _machine <- JP.parseMachineFile machinePath
-    return ()
---    putStrLn "Machine :"
---    print machine
+run machinePath tape = do
+    machine <- JP.parseMachineFile machinePath
 
-    -- TODO : tape parsing -> launch machine
+    -- TODO : tape parsing
+
+    executeMachine machine tape
