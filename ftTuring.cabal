@@ -66,7 +66,9 @@ executable ftTuring
     main-is:        Main.hs
 
     -- Modules included in this executable, other than Main.
-    other-modules:  Json_Parser
+    other-modules:  Json_Parser,
+                    TapeValidator,
+                    TuringMachine
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
@@ -91,7 +93,10 @@ test-suite ftTuring-test
     type:             exitcode-stdio-1.0
     main-is:          Test.hs
     other-modules:    Json_Parser,
-                      JsonParserTest
+                      TapeValidator,
+                      JsonParserTest,
+                      TapeValidationTest
+
     build-depends:    base ^>=4.18.3.0,
                       aeson,
                       bytestring,
@@ -101,5 +106,6 @@ test-suite ftTuring-test
                       tasty,
                       tasty-hunit,
                       filepath
+
     hs-source-dirs:   test, app
     default-language: GHC2021
