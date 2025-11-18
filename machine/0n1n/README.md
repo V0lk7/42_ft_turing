@@ -45,7 +45,7 @@ The machine uses a matching strategy to verify equal counts:
 
 ## State Transition Diagram
 <p align="center">
-  <img src="diagram.png">
+  <img src="0n1n_diagram.png">
 </p>
 
 ## Transition Table
@@ -67,10 +67,6 @@ The machine uses a matching strategy to verify equal counts:
 | q4 | q4 | 1 | 1 | RIGHT  |
 | q4 | q4 | 0 | 0 | RIGHT  |
 | q4 | HALT | . | N | RIGHT  |
-
-## Example Executions
-
-WAITING PROGRAM TO RUN MACHINE AND PUT EXEMPLE IN THE MARKDOWN
 
 ## Usage
 
