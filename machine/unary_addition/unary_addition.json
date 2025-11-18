@@ -1,25 +1,33 @@
 {
-	"name": "unary_format_addition",
-	"alphabet": ["1", "+", "."],
+	"name": "unary_addition",
+	"alphabet": ["0", "+", "."],
 	"blank": ".",
-	"states": [	"scan_left_operand",
-			"scan_right_operand",
-			"sub_one_to_right_operand",
+	"states": [	"q0",
+			"q1",
+			"q2",
+			"q3",
 			"HALT"
 		],
-	"initial": "scan_left_operand",
+	"initial": "q0",
 	"finals": ["HALT"],
 	"transitions" : { 
-		"scan_left_operand": [
-			{ "read": "1", "to_state": "scan_left_operand", "write": "1", "action": "RIGHT"},
-			{ "read": "+", "to_state": "scan_right_operand", "write": "1", "action": "RIGHT"}
+		"q0": [
+			{ "read": "0", "to_state": "q1", "write": "0", "action": "RIGHT"},
+			{ "read": "+", "to_state": "HALT", "write": "+", "action": "RIGHT"},
+			{ "read": ".", "to_state": "HALT", "write": ".", "action": "RIGHT"}
 		],
-		"scan_right_operand": [
-			{ "read": "1", "to_state": "scan_right_operand", "write": "1", "action": "RIGHT"},
-			{ "read": ".", "to_state": "sub_one_to_right_operand", "write": ".", "action": "LEFT"}
+		"q1": [
+			{ "read": "0", "to_state": "q1", "write": "0", "action": "RIGHT"},
+			{ "read": "+", "to_state": "q2", "write": "0", "action": "RIGHT"},
+			{ "read": ".", "to_state": "HALT", "write": ".", "action": "RIGHT"}
 		],
-		"sub_one_to_right_operand": [
-			{ "read": "1", "to_state": "HALT", "write": ".", "action": "RIGHT"}
+		"q2": [
+			{ "read": "0", "to_state": "q2", "write": "0", "action": "RIGHT"},
+			{ "read": "+", "to_state": "HALT", "write": "+", "action": "RIGHT"},
+			{ "read": ".", "to_state": "q3", "write": ".", "action": "LEFT"}
+		],
+		"q3": [
+			{ "read": "0", "to_state": "HALT", "write": ".", "action": "RIGHT"}
 		]
 	}
 }
