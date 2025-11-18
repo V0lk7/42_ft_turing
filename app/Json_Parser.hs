@@ -11,6 +11,7 @@ module Json_Parser
 
 import GHC.Generics (Generic)
 import Data.Text (Text)
+import Data.List (stripPrefix)
 import qualified Data.Text as T
 import qualified Data.ByteString.Lazy as BL
 import Data.Aeson
@@ -193,10 +194,17 @@ instance FromJSON Machine where
         -- everything fine: build machine
         return $ Machine name alphabet blank states initial initial finals transitionsMap
 
+-- remove aeson part in error message
+cleanAesonError :: String -> String
+cleanAesonError msg =
+    case stripPrefix "Error in $: " msg of
+        Just rest -> rest
+        Nothing   -> msg
+
 -- open file, parse and die if an error occurs
 parseMachineFile :: FilePath -> IO Machine
 parseMachineFile path = do
     contents <- BL.readFile path
     case eitherDecode contents of
-        Left err -> die $ "Error: JSON parsing error in " ++ path ++ ": " ++ err
+        Left err -> die $ "Error: JSON parsing error in " ++ path ++ ": " ++ cleanAesonError err
         Right m  -> return m
