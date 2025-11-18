@@ -1,6 +1,6 @@
 {
-	"name": "palindrome",
-	"alphabet": ["A", "B", "Y", "N", "."],
+	"name": "0n1n",
+	"alphabet": ["0", "1", "Y", "N", "."],
 	"blank": ".",
 	"states": [	"q0",
 			"q1",
@@ -25,7 +25,7 @@
 		"q2": [
 			{ "read": "1", "to_state": "q3", "write": ".", "action": "LEFT"},
 			{ "read": ".", "to_state": "q4", "write": ".", "action": "RIGHT"},
-			{ "read": "1", "to_state": "q4", "write": "1", "action": "RIGHT"}
+			{ "read": "0", "to_state": "q4", "write": "0", "action": "RIGHT"}
 		],
 		"q3": [
 			{ "read": "1", "to_state": "q3", "write": "1", "action": "LEFT"},
