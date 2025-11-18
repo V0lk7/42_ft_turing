@@ -3,6 +3,7 @@ import System.Environment (getArgs)
 import Data.Char (toLower)
 import System.Exit (die, exitSuccess)
 import qualified Json_Parser as JP
+import TapeValidator (validateTape)
 import TuringMachine (executeMachine)
 
 main :: IO ()
@@ -23,6 +24,6 @@ run :: FilePath -> String -> IO()
 run machinePath tape = do
     machine <- JP.parseMachineFile machinePath
 
-    -- TODO : tape parsing
-
-    executeMachine machine tape
+    case validateTape machine tape of
+        Left errorMsg -> die errorMsg
+        Right () -> executeMachine machine tape

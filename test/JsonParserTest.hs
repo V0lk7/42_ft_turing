@@ -8,7 +8,6 @@ import System.FilePath ((</>))
 import Test.Tasty
 import Test.Tasty.HUnit
 
--- Chemins vers les fixtures
 validFixtures :: FilePath
 validFixtures = "test" </> "jsonFiles" </> "valid"
 
@@ -23,7 +22,6 @@ tests =
       invalidMachineTests
     ]
 
--- Tests pour les machines valides
 validMachineTests :: TestTree
 validMachineTests =
   testGroup
@@ -36,11 +34,9 @@ validMachineTests =
         length (JP.mAlphabet machine) @?= 3
         JP.mBlank machine @?= "."
         JP.mFinals machine @?= ["HALT"]
-        -- Vérifie que les transitions existent pour les bons états
         length (JP.mTransitions machine) @?= 3
     ]
 
--- Tests pour les machines invalides (doivent échouer)
 invalidMachineTests :: TestTree
 invalidMachineTests =
   testGroup
@@ -167,11 +163,10 @@ invalidMachineTests =
         ]
     ]
 
--- Fonction utilitaire pour tester qu'un parsing échoue
 assertParseFailure :: FilePath -> Assertion
 assertParseFailure filename = do
   let path = invalidFixtures </> filename
   result <- try (JP.parseMachineFile path) :: IO (Either SomeException JP.Machine)
   case result of
-    Left _ -> return () -- Le parsing a échoué comme attendu
+    Left _ -> return ()
     Right _ -> assertFailure $ "Expected parsing to fail for " ++ filename ++ ", but it succeeded"
