@@ -54,10 +54,6 @@ The algorithm alternates between two states, effectively counting by 2's. If we 
 | q1 | q0 | 0 | 0 | RIGHT  |
 | q1 | HALT | . | N | RIGHT  |
 
-## Example Executions
-
-WAITING PROGRAM TO RUN MACHINE AND PUT EXEMPLE IN THE MARKDOWN
-
 ## Valid Input Patterns
 
 ### Accepted Strings (Output: Y)
