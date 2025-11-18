@@ -7,17 +7,17 @@ validateTape :: JP.Machine -> String -> Either String ()
 validateTape machine tape =
     let alphabet = JP.mAlphabet machine
         blank = JP.mBlank machine
-        blankChar = T.head blank
+        -- blankChar = T.head blank
         alphabetChars = map T.head alphabet
-        alphabetWithoutBlank = filter (/= blankChar) alphabetChars
+        alphabetWithoutBlank = filter (/= T.head blank) alphabetChars
         
-        containsBlank = blankChar `elem` tape
+        containsBlank = T.isInfixOf blank (T.pack tape)
         
         invalidChars = filter (`notElem` alphabetWithoutBlank) tape
         
     in if containsBlank
         then Left $ "Error: Input tape cannot contain the blank character '"
-                    ++ [blankChar] ++ "'"
+                    ++ T.unpack blank ++ "'"
         else if not (null invalidChars)
             then Left $ "Error: Invalid characters in tape: " ++ invalidChars
                         ++ "\nAllowed characters: " ++ alphabetWithoutBlank
