@@ -93,6 +93,7 @@ test-suite ftTuring-test
     type:             exitcode-stdio-1.0
     main-is:          Test.hs
     other-modules:    Json_Parser,
+                      TapeValidator,
                       JsonParserTest,
                       TapeValidationTest
 

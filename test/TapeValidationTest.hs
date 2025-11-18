@@ -1,11 +1,12 @@
+{-# LANGUAGE OverloadedStrings #-}
 module TapeValidationTest (tests) where
 
 import Test.Tasty
 import Test.Tasty.HUnit
 import qualified Json_Parser as JP
-import qualified Data.Text as T
 import qualified Data.Map.Strict as M
 import TapeValidator (validateTape)
+    
 
 -- ====================
 -- Machine Definitions
@@ -14,7 +15,7 @@ import TapeValidator (validateTape)
 unaryAdditionMachine :: JP.Machine
 unaryAdditionMachine = JP.Machine
     { JP.mName = "unary_addition"
-    , JP.mAlphabet = ["1", "+", "=", "."]
+    , JP.mAlphabet = ["1", "+", "."]
     , JP.mBlank = "."
     , JP.mStates = ["s1", "s2"]
     , JP.mInitial = "s1"
@@ -64,22 +65,23 @@ palindromeMachine = JP.Machine
 -- ====================
 
 data TapeTestCase = TapeTestCase
-    { tcName :: String              -- Nom du test
-    , tcMachine :: JP.Machine       -- Machine à tester
-    , tcTape :: String              -- Input tape
-    , tcShouldSucceed :: Bool       -- True = succès attendu, False = erreur attendue
-    , tcExpectedInMessage :: [String]  -- Mots-clés attendus dans le message d'erreur (si échec)
+    { tcName :: String
+    , tcMachine :: JP.Machine
+    , tcTape :: String
+    , tcShouldSucceed :: Bool
+    , tcExpectedInMessage :: [String]
     }
 
 allTestCases :: [TapeTestCase]
 allTestCases =
     -- Unary Addition Tests
-    [ TapeTestCase "Unary: valid input 11+111=" unaryAdditionMachine "11+111=" True []
-    , TapeTestCase "Unary: valid input 1+1=" unaryAdditionMachine "1+1=" True []
-    , TapeTestCase "Unary: reject blank" unaryAdditionMachine "11+.11=" False ["blank character"]
-    , TapeTestCase "Unary: reject invalid char '0'" unaryAdditionMachine "11+011=" False ["Invalid characters", "0"]
-    , TapeTestCase "Unary: reject invalid char 'a'" unaryAdditionMachine "1a+1=" False ["Invalid characters", "a"]
+    [ TapeTestCase "Unary: valid input 11+111=" unaryAdditionMachine "11+111" True []
+    , TapeTestCase "Unary: valid input 1+1=" unaryAdditionMachine "1+1" True []
+    , TapeTestCase "Unary: reject blank" unaryAdditionMachine "11+.11" False ["blank character"]
+    , TapeTestCase "Unary: reject invalid char '0'" unaryAdditionMachine "11+011" False ["Invalid characters", "0"]
+    , TapeTestCase "Unary: reject invalid char 'a'" unaryAdditionMachine "1a+1" False ["Invalid characters", "a"]
     , TapeTestCase "Unary: empty tape" unaryAdditionMachine "" True []
+    , TapeTestCase "Unary: only blank" unaryAdditionMachine "...+..." False ["blank character"]
     
     -- 0^n1^n Tests
     , TapeTestCase "0n1n: valid input 0011" zeroNoneNMachine "0011" True []
@@ -115,12 +117,12 @@ makeTest tc = testCase (tcName tc) $
     case validateTape (tcMachine tc) (tcTape tc) of
         Right () -> 
             if tcShouldSucceed tc
-                then return ()  -- Succès attendu et obtenu
+                then return ()
                 else assertFailure $ "Expected error but validation succeeded for: " ++ tcTape tc
         Left msg ->
             if tcShouldSucceed tc
                 then assertFailure $ "Expected success but got error: " ++ msg
-                else -- Échec attendu, vérifier les mots-clés
+                else
                     mapM_ (\keyword -> 
                         assertBool ("Error message should contain '" ++ keyword ++ "'. Got: " ++ msg)
                                    (keyword `isInfixOf` msg)
