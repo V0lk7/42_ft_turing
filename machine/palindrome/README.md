@@ -72,10 +72,6 @@ The machine operates using the following strategy:
 | q6 | HALT | . | N | LEFT |
 | q7 | HALT | . | Y | LEFT |
 
-## Example Executions
-
-WAITING PROGRAM TO RUN MACHINE AND PUT EXEMPLE IN THE MARKDOWN
-
 ## Usage
 
 To run this Turing machine:
