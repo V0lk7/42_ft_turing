@@ -16,8 +16,8 @@ For example:
 - **Blank Symbol**: `[.]`
 - **Alphabet**: `[0, +] + [.]`
 - **Initial State**: `q0`
-- **Final States**: `HALT`, `REJECT`
-- **States**: `q0, q1, q2, q3, HALT, REJECT`
+- **Final States**: `HALT`
+- **States**: `q0, q1, q2, q3, HALT`
 
 ## State Descriptions
 
@@ -26,11 +26,8 @@ For example:
 - **q2**: Second number traversal - moves right through the second number after converting '+' to '0', looking for the end of the tape
 - **q3**: Cleanup state - removes the last '0' from the tape to maintain the correct count after merging the two numbers
 - **HALT**: Accepting final state - computation completed successfully
-- **REJECT**: Rejecting final state - input format is invalid (empty, starts with '+', or contains multiple '+' signs)
 
 ## How It Works
-
-The machine uses a clever strategy to add unary numbers:
 
 1. **Validation** (q0): Ensures the input starts with '0' (not empty or starting with '+')
 2. **Find Operator** (q1): Moves right through the first number until finding the '+' sign
@@ -53,7 +50,7 @@ By replacing '+' with '0' and removing one '0' from the end, we get the correct 
 ## State Transition Diagram
 
 <p align="center">
-<img src="unary_addition.png" width=600>
+<img src="unary_addition_diagram.png" width=600>
 </p>
 
 ## Transition Table
@@ -61,19 +58,15 @@ By replacing '+' with '0' and removing one '0' from the end, we get the correct 
 | Current State | Next State | Read Symbol | Write Symbol | Move Direction |
 |:-------------:|:----------:|:-----------:|:------------:|:--------------:|
 | q0 | q1 | 0 | 0 | RIGHT |
-| q0 | REJECT | + | + | RIGHT |
-| q0 | REJECT | . | . | RIGHT |
+| q0 | HALT | + | + | RIGHT |
+| q0 | HALT | . | . | RIGHT |
 | q1 | q1 | 0 | 0 | RIGHT |
 | q1 | q2 | + | 0 | RIGHT |
 | q1 | HALT | . | . | RIGHT |
 | q2 | q2 | 0 | 0 | RIGHT |
-| q2 | REJECT | + | + | RIGHT |
+| q2 | HALT | + | + | RIGHT |
 | q2 | q3 | . | . | LEFT |
 | q3 | HALT | 0 | . | RIGHT |
-
-## Example Executions
-
-
 
 ## Input Format Requirements
 
@@ -99,15 +92,7 @@ To run this Turing machine:
    - Validate the input format
    - Compute the sum
    - Output the result in unary format
-   - Halt in `HALT` state for valid input, or `REJECT` for invalid input
-
-## File Structure
-
-```
-├── unary_addition.json   # Machine configuration
-├── README.md            # This file
-└── _diagram.png         # State diagram visualization
-```
+   - Halt in `HALT` state for valid and invalid input
 
 ## Unary Number System
 
