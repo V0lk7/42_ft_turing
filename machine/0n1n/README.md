@@ -79,6 +79,5 @@ To run this Turing machine:
 ## Implementation Notes
 
 - The machine uses the blank symbol (`.`) to mark processed positions
-- Empty strings are accepted (n=0 is valid)
 - The string must have all 0's before all 1's (no interleaving)
 - The counts of 0's and 1's must be exactly equal

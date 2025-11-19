@@ -11,10 +11,15 @@ main = do
     args <- getArgs
     let loweredArgs = map (map toLower) args
         wantsHelp = any (\a -> a == "-h" || a == "--help") loweredArgs
-        usage = "Usage: cabal run ftTuring -- 'path to machine' 'tape'\nOr: -h / --help to show this message"
+        usage = "Usage: cabal run ftTuring -- [-h] jsonfile input"
     if wantsHelp
         then do
             putStrLn usage
+            putStrLn $ "\npositional arguments:\n"
+                        ++ "    jsonfile\tjson description of the machine\n"
+                        ++ "    input\t\tinput of the machine\n\n"
+                        ++ "optional arguments:\n"
+                        ++ "    -h, --help\tshow this help message and exit"
             exitSuccess
         else case args of   [machine, tape] ->  run machine tape
                             _               ->  die $ "Wrong number of args. " ++ usage
