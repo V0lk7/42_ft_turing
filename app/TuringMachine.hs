@@ -17,19 +17,8 @@ move (Tape [] _ r)      write LEFT blank    = Tape [] blank (write:r)
 
 -- init tape with blanks at the end
 initTape :: String -> Char -> Tape
--- initTape str blank = Tape [] '' (str ++ [blank])
 initTape [] blank       = Tape [] blank [blank]
 initTape (x:xs) blank   = Tape [] x (xs ++ [blank])
-
--- skip starting Blanks
-skipBlanks :: Tape -> Char -> Tape
-skipBlanks tape blank
-    | currentSymbol tape /= blank = tape
-    | otherwise =
-        let tape' = move tape blank RIGHT blank
-        in  if tape' == tape
-            then tape
-            else skipBlanks tape' blank
 
 -- read current
 currentSymbol :: Tape -> Char
@@ -63,8 +52,7 @@ printBanner name = do
 executeMachine :: Machine -> String -> IO ()
 executeMachine m input = do
     let blankChar = T.head (mBlank m)
-        tape0 = initTape input blankChar
-        tapeStart = skipBlanks tape0 blankChar
+        tape = initTape input blankChar
 
     -- Display machine infos
     printBanner (mName m)
@@ -76,7 +64,7 @@ executeMachine m input = do
     putStrLn $ replicate 80 '*'
 
     -- run
-    runMachine m tapeStart
+    runMachine m tape
 
 -- machine loop
 runMachine :: Machine -> Tape -> IO ()
