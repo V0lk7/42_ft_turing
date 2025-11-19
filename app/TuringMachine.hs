@@ -15,9 +15,11 @@ move (Tape l _ [])      write RIGHT blank   = Tape (write:l) blank []
 move (Tape (x:xs) _ r)  write LEFT _        = Tape xs x (write:r)
 move (Tape [] _ r)      write LEFT blank    = Tape [] blank (write:r)
 
--- init tape with blanks at the ends
+-- init tape with blanks at the end
 initTape :: String -> Char -> Tape
-initTape str blank = Tape [] blank (str ++ [blank])
+-- initTape str blank = Tape [] '' (str ++ [blank])
+initTape [] blank       = Tape [] blank [blank]
+initTape (x:xs) blank   = Tape [] x (xs ++ [blank])
 
 -- skip starting Blanks
 skipBlanks :: Tape -> Char -> Tape

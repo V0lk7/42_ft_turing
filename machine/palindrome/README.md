@@ -83,4 +83,3 @@ To run this Turing machine:
 ## Implementation Notes
 
 - The machine uses the blank symbol (`.`) to mark processed positions
-- Empty strings are considered palindromes (outputs 'Y')
