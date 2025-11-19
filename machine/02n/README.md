@@ -86,7 +86,6 @@ To run this Turing machine:
 ## Implementation Notes
 
 - The machine uses the blank symbol (`.`) to mark processed positions
-- Empty string is accepted (0 is an even number)
 - The algorithm effectively performs modulo 2 arithmetic
 - Result ('Y' or 'N') is written at the right of the rightmost character as specified
 
@@ -98,7 +97,6 @@ The notation **0^(2n)** means:
 - This is equivalent to the language: {ε, 00, 0000, 000000, ...}
 
 Where:
-- n = 0 → 0^(2×0) = 0^0 = ε (empty string)
 - n = 1 → 0^(2×1) = 0^2 = 00
 - n = 2 → 0^(2×2) = 0^4 = 0000
 - n = 3 → 0^(2×3) = 0^6 = 000000

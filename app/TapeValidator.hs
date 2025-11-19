@@ -14,9 +14,11 @@ validateTape machine tape =
         
         invalidChars = filter (`notElem` alphabetWithoutBlank) tape
         
-    in if containsBlank
-        then Left $ "Error: Input tape cannot contain the blank character '"
-                ++ T.unpack blank ++ "'"
+    in if null tape
+        then Left "Error: Input tape cannot be empty"
+        else if containsBlank
+            then Left $ "Error: Input tape cannot contain the blank character '"
+                    ++ T.unpack blank ++ "'"
         else if not (null invalidChars)
             then Left $ "Error: Invalid characters in tape: " ++ invalidChars
                         ++ "\nAllowed characters: " ++ alphabetWithoutBlank
