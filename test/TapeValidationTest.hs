@@ -80,7 +80,7 @@ allTestCases =
     , TapeTestCase "Unary: reject blank" unaryAdditionMachine "11+.11" False ["blank character"]
     , TapeTestCase "Unary: reject invalid char '0'" unaryAdditionMachine "11+011" False ["Invalid characters", "0"]
     , TapeTestCase "Unary: reject invalid char 'a'" unaryAdditionMachine "1a+1" False ["Invalid characters", "a"]
-    , TapeTestCase "Unary: empty tape" unaryAdditionMachine "" True []
+    , TapeTestCase "Unary: empty tape" unaryAdditionMachine "" False []
     , TapeTestCase "Unary: only blank" unaryAdditionMachine "...+..." False ["blank character"]
     
     -- 0^n1^n Tests
@@ -89,7 +89,7 @@ allTestCases =
     , TapeTestCase "0n1n: reject blank" zeroNoneNMachine "00.11" False ["blank character"]
     , TapeTestCase "0n1n: reject invalid char '2'" zeroNoneNMachine "0021" False ["Invalid characters", "2"]
     , TapeTestCase "0n1n: reject invalid char 'x'" zeroNoneNMachine "00x11" False ["Invalid characters", "x"]
-    , TapeTestCase "0n1n: empty tape" zeroNoneNMachine "" True []
+    , TapeTestCase "0n1n: empty tape" zeroNoneNMachine "" False []
     
     -- 0^2n Tests
     , TapeTestCase "02n: valid input 0000" zeroTwoNMachine "0000" True []
@@ -97,7 +97,7 @@ allTestCases =
     , TapeTestCase "02n: reject blank" zeroTwoNMachine "00.0" False ["blank character"]
     , TapeTestCase "02n: reject invalid char '1'" zeroTwoNMachine "0010" False ["Invalid characters", "1"]
     , TapeTestCase "02n: reject invalid char 'z'" zeroTwoNMachine "00z0" False ["Invalid characters", "z"]
-    , TapeTestCase "02n: empty tape" zeroTwoNMachine "" True []
+    , TapeTestCase "02n: empty tape" zeroTwoNMachine "" False []
     
     -- Palindrome Tests
     , TapeTestCase "Palindrome: valid input 0110" palindromeMachine "0110" True []
@@ -105,7 +105,7 @@ allTestCases =
     , TapeTestCase "Palindrome: reject blank" palindromeMachine "01.10" False ["blank character"]
     , TapeTestCase "Palindrome: reject invalid char '2'" palindromeMachine "0120" False ["Invalid characters", "2"]
     , TapeTestCase "Palindrome: reject invalid char 'p'" palindromeMachine "01p10" False ["Invalid characters", "p"]
-    , TapeTestCase "Palindrome: empty tape" palindromeMachine "" True []
+    , TapeTestCase "Palindrome: empty tape" palindromeMachine "" False []
     ]
 
 -- ====================

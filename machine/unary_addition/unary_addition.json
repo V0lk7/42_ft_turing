@@ -6,14 +6,15 @@
 			"q1",
 			"q2",
 			"q3",
-			"HALT"
+			"HALT",
+			"ERROR"
 		],
 	"initial": "q0",
-	"finals": ["HALT"],
+	"finals": ["HALT", "ERROR"],
 	"transitions" : { 
 		"q0": [
 			{ "read": "0", "to_state": "q1", "write": "0", "action": "RIGHT"},
-			{ "read": "+", "to_state": "HALT", "write": "+", "action": "RIGHT"},
+			{ "read": "+", "to_state": "ERROR", "write": "+", "action": "RIGHT"},
 			{ "read": ".", "to_state": "HALT", "write": ".", "action": "RIGHT"}
 		],
 		"q1": [
@@ -23,7 +24,7 @@
 		],
 		"q2": [
 			{ "read": "0", "to_state": "q2", "write": "0", "action": "RIGHT"},
-			{ "read": "+", "to_state": "HALT", "write": "+", "action": "RIGHT"},
+			{ "read": "+", "to_state": "ERROR", "write": "+", "action": "RIGHT"},
 			{ "read": ".", "to_state": "q3", "write": ".", "action": "LEFT"}
 		],
 		"q3": [

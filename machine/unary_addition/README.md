@@ -16,8 +16,8 @@ For example:
 - **Blank Symbol**: `[.]`
 - **Alphabet**: `[0, +] + [.]`
 - **Initial State**: `q0`
-- **Final States**: `HALT`
-- **States**: `q0, q1, q2, q3, HALT`
+- **Final States**: `HALT, ERROR`
+- **States**: `q0, q1, q2, q3, HALT, ERROR`
 
 ## State Descriptions
 
@@ -26,6 +26,7 @@ For example:
 - **q2**: Second number traversal - moves right through the second number after converting '+' to '0', looking for the end of the tape
 - **q3**: Cleanup state - removes the last '0' from the tape to maintain the correct count after merging the two numbers
 - **HALT**: Accepting final state - computation completed successfully
+- **ERROR**: Rejecting final state - computation has stopped with an error
 
 ## How It Works
 
@@ -58,13 +59,13 @@ By replacing '+' with '0' and removing one '0' from the end, we get the correct 
 | Current State | Next State | Read Symbol | Write Symbol | Move Direction |
 |:-------------:|:----------:|:-----------:|:------------:|:--------------:|
 | q0 | q1 | 0 | 0 | RIGHT |
-| q0 | HALT | + | + | RIGHT |
-| q0 | HALT | . | . | RIGHT |
+| q0 | ERROR | + | + | RIGHT |
+| q0 | ERROR | . | . | RIGHT |
 | q1 | q1 | 0 | 0 | RIGHT |
 | q1 | q2 | + | 0 | RIGHT |
 | q1 | HALT | . | . | RIGHT |
 | q2 | q2 | 0 | 0 | RIGHT |
-| q2 | HALT | + | + | RIGHT |
+| q2 | ERROR | + | + | RIGHT |
 | q2 | q3 | . | . | LEFT |
 | q3 | HALT | 0 | . | RIGHT |
 
@@ -92,7 +93,8 @@ To run this Turing machine:
    - Validate the input format
    - Compute the sum
    - Output the result in unary format
-   - Halt in `HALT` state for valid and invalid input
+   - Halt in `HALT` state for valid input
+   - Stop in `ERROR` state for invalid input
 
 ## Unary Number System
 

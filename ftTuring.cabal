@@ -33,7 +33,7 @@ synopsis:
 homepage:           https://github.com/V0lk7/42_ft_turing
 
 -- The license under which the package is released.
-license:            BSD-3-Clause
+license:            Unlicense
 
 -- The file containing the license text.
 license-file:       LICENSE
